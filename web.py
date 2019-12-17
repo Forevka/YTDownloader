@@ -12,10 +12,12 @@ from models.requests.sound import RequestLink
 
 file_name = ContextVar('filename')
 
+
 def downloaded_hook(d):
     if d['status'] == 'finished':
         logger.info('downloaded')
         file_name.set(d['filename'])
+
 
 ydl_opts = {
     'format': 'bestaudio/best',
@@ -26,6 +28,7 @@ ydl_opts = {
     }],
     'progress_hooks': [downloaded_hook],
 }
+
 
 @docs(
     tags=["link"],
@@ -45,8 +48,7 @@ async def get_sound_by_yt_link(request: web.Request):
         pre, ext = os.path.splitext(file_name.get())
 
         return web.FileResponse(path=pre + '.mp3')
-    return web.Response(status=415)
-
+    return web.Response(status=406)
 
 
 app = web.Application()
@@ -58,8 +60,8 @@ app.middlewares.append(validation_middleware)
 
 if __name__ == '__main__':
     setup_aiohttp_apispec(
-        app=app, 
-        title="My Documentation", 
+        app=app,
+        title="My Documentation",
         version="v1",
         url="/api/docs/swagger.json",
         swagger_path="/api/docs",
