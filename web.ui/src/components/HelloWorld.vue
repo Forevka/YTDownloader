@@ -19,10 +19,6 @@ export default class HelloWorld extends Vue {
 
 <style lang="scss" scoped>
 
-.main-div {
-  visibility: hidden;
-}
-
 </style>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
