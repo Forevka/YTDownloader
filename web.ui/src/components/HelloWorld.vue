@@ -1,9 +1,9 @@
 <template>
   <div class="main-div">
     <section>
-        <b-field label="Name">
-            <b-input value="Kevin Garvey"></b-input>
-        </b-field>
+      <b-field label="Name">
+          <b-input value="Kevin Garvey"></b-input>
+      </b-field>
     </section>
   </div>
 </template>
@@ -16,6 +16,14 @@ export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
 }
 </script>
+
+<style lang="scss" scoped>
+
+.main-div {
+  visibility: hidden;
+}
+
+</style>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>

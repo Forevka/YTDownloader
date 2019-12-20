@@ -8,6 +8,10 @@
   </div>
 </template>
 
+<style lang="scss">
+@import url('https://use.fontawesome.com/releases/v5.2.0/css/all.css');
+</style>
+
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
