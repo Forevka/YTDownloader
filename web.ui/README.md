@@ -1,4 +1,4 @@
-# my-project-name
+# YouTube Downloader UI
 
 ## Project setup
 ```
