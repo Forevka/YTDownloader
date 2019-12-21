@@ -10,10 +10,18 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { FilesApi } from '@/services/FilesApi'
+import { IFile } from '../models/IFile';
 
 @Component
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
+  private file!: IFile;
+
+  async mounted(): Promise<void> {
+    this.file = await FilesApi.getFile('test');
+    console.log(this.file)
+  }
 }
 </script>
 
