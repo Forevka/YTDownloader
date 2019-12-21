@@ -1,6 +1,6 @@
 import axios, { AxiosStatic } from 'axios';
 import { IFile } from '@/models/IFile';
-import {ResponseFileInterface} from '@/models/response/ResponseFile';
+import {ResponseFileInterface} from '@/models/responses/ResponseFile';
 
 export class FilesApi {
     private static filesAxios = axios.create();

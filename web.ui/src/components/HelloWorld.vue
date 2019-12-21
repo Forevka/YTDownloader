@@ -2,16 +2,16 @@
   <div class="main-div">
     <section>
       <b-field label="Name">
-          <b-input value="Kevin Garvey"></b-input>
+        <b-input value="Kevin Garvey"></b-input>
       </b-field>
     </section>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { FilesApi } from '@/services/FilesApi'
-import { IFile } from '../models/IFile';
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { FilesApi } from "@/services/FilesApi";
+import { IFile } from "../models/IFile";
 
 @Component
 export default class HelloWorld extends Vue {
@@ -19,8 +19,9 @@ export default class HelloWorld extends Vue {
   private file!: IFile;
 
   async mounted(): Promise<void> {
-    this.file = await FilesApi.getFile('test');
-    console.log(this.file)
+    this.file = await FilesApi.getFile("test");
+    console.log(this.file);
+    console.log(this.file.path);
   }
 }
 </script>
