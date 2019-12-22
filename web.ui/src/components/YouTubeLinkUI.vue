@@ -1,11 +1,17 @@
 <template>
-  <div class="main-div">
-    <section>
-      <b-field label="Link">
-        <b-input class="yt-link-input" v-model="yt_link"></b-input>
+  <div>
+    <section class="main-section">
+      <b-field label="YouTube Downloader">
+        <b-input
+          class="yt-link-input"
+          v-model="yt_link"
+          placeholder="https://www.youtube.com/watch?v=yXmzBV9Ush0"
+          :loading="yt_link_loading"
+          @input="ytLinkInput"
+        ></b-input>
       </b-field>
-      <b-button type="is-success" v-on:click="userSumbit">Submit</b-button>
 
+      <h1>Select preffer quality</h1>
       <b-field>
         <b-radio-button
           v-for="q in qualityList"
@@ -16,6 +22,9 @@
         >
           <span>{{q.name}}</span>
         </b-radio-button>
+      </b-field>
+      <b-field>
+        <b-button type="is-primary" v-on:click="userSumbit">Submit</b-button>
       </b-field>
     </section>
   </div>
@@ -28,6 +37,7 @@ import { FileQuality } from "@/enums/QualityEnum";
 import { IFile } from "../models/IFile";
 import { Dictionary } from "vue-router/types/router";
 import { IQuality } from "../models/IQuality";
+import { UrlTester } from "@/utilities/url_tester";
 
 @Component
 export default class YouTubeLinkUI extends Vue {
@@ -37,6 +47,9 @@ export default class YouTubeLinkUI extends Vue {
   private file!: IFile;
   private fileQuality: FileQuality = FileQuality.Good;
   private qualityList: IQuality[] = [];
+  private yt_link_loading: boolean = false;
+
+  private urlTester: UrlTester = new UrlTester()
 
   constructor() {
     super();
@@ -49,19 +62,28 @@ export default class YouTubeLinkUI extends Vue {
 
   userSumbit(): void {
     console.log(this.yt_link);
+    this.yt_link_loading = true;
+  }
+
+  ytLinkInput(value: string): void {
+    console.log(value);
+    console.log(this.urlTester.isValid(value))
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.main-div {
-  display: inline-flex;
+.main-section {
+  max-width: 50%;
+  margin-left: 25%;
 }
 
-.yt-link-input {
-  padding-left: 25%;
-  padding-right: 25%;
+h1 {
+  font-size: 100%;
+  font-weight: bold;
+  display: flex;
+  margin-bottom: 7px;
 }
 
 ul {
