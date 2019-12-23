@@ -7,6 +7,7 @@ from aiohttp_apispec import (
     docs, querystring_schema, setup_aiohttp_apispec, validation_middleware)
 from loguru import logger
 import youtube_dl
+import routes
 
 from models.requests.sound import RequestLink
 
@@ -51,14 +52,11 @@ async def get_sound_by_yt_link(request: web.Request):
     return web.Response(status=406)
 
 
-app = web.Application()
-
-app.add_routes([web.get('/sound', get_sound_by_yt_link)])
-
-app.middlewares.append(validation_middleware)
-
 
 if __name__ == '__main__':
+    app = web.Application()
+    routes.create(app)
+    app.middlewares.append(validation_middleware)
     setup_aiohttp_apispec(
         app=app,
         title="My Documentation",
