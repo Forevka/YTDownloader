@@ -1,6 +1,5 @@
 from marshmallow import Schema, fields
 
-
 class RequestQuality(Schema):
     links = fields.List(fields.Url())
 
