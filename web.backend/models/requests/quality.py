@@ -2,5 +2,7 @@ from marshmallow import Schema, fields
 
 
 class RequestQuality(Schema):
-    link = fields.Url()
-    quality = fields.Int()
+    links = fields.List(fields.Url())
+
+
+request_quality_schema = RequestQuality()
