@@ -19,5 +19,8 @@ class BaseModel(Schema):
 @middleware
 async def serialize_middleware(request, handler):
     #request_model_name = dict(request.config_dict)['swagger_dict']['paths'][request.path][request.method.lower()]['parameters'][0]['schema']['$ref'].split('/')[-1]
-    request['object_model'] = MDict(request['data'])
+    if request.get('data'):
+        request['object_model'] = MDict(request['data'])
+    else:
+        request['object_model'] = None
     return await handler(request)
