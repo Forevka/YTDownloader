@@ -19,11 +19,11 @@ from models.response.quality import ResponseQuality
 @request_schema(RequestQuality)
 @response_schema(ResponseQuality, 200)
 async def get_quality(request: web.Request):
-    if request.body_exists:
-        yt_links = await request.json()
-        logger.info(yt_links)
+    model = request.get('object_model')
+    if model:
+        logger.info(model.links)
         links = []
-        for link in yt_links['links']:
+        for link in model.links:
             video = pytube.YouTube(link)
             links.append({"link": link, 
                             "available_quality": [

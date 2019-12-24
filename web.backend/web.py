@@ -2,6 +2,7 @@ from aiohttp import web
 from aiohttp_apispec import (setup_aiohttp_apispec, validation_middleware)
 from loguru import logger
 from utils.patch import patch; patch()
+from utils.base_model import serialize_middleware
 import routes
 
 if __name__ == '__main__':
@@ -10,6 +11,7 @@ if __name__ == '__main__':
     routes.register(app)
 
     app.middlewares.append(validation_middleware)
+    app.middlewares.append(serialize_middleware)
 
     setup_aiohttp_apispec(
         app=app,
