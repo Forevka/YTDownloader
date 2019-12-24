@@ -1,20 +1,17 @@
-from marshmallow import Schema, fields
+from pydantic import BaseModel, AnyUrl
+import typing
+
+class AvailableQuality(BaseModel):
+    id: int
+    mime_type: str
+    resolution: typing.Optional[str]
+    fps: str
 
 
-class AvailableQuality(Schema):
-    id = fields.Int()
-    mime_type = fields.Str()
-    resolution = fields.Str()
-    fps = fields.Str()
+class VideoQuality(BaseModel):
+    link: AnyUrl
+    available_quality: typing.List[AvailableQuality]
 
 
-class VideoQuality(Schema):
-    link = fields.Url()
-    available_quality = fields.List(fields.Nested(AvailableQuality))
-
-
-class ResponseQuality(Schema):
-    links = fields.List(fields.Nested(VideoQuality))
-
-
-response_quality_schema = ResponseQuality()
+class ResponseQuality(BaseModel):
+    links: typing.List[VideoQuality]

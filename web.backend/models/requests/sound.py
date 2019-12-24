@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields
+from pydantic import BaseModel, AnyUrl
 
-class RequestLink(Schema):
-    link = fields.Url()
+class RequestLink(BaseModel):
+    link: AnyUrl

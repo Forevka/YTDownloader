@@ -1,7 +1,5 @@
-from marshmallow import Schema, fields
+from pydantic import BaseModel, AnyUrl
+import typing
 
-class ResponseFile(Schema):
-    file_base64 = fields.String()
-
-
-response_schema_file = ResponseFile()
+class ResponseFile(BaseModel):
+    file_base64: str

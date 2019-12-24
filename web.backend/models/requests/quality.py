@@ -1,8 +1,5 @@
-from marshmallow import Schema, fields
-from utils.base_model import BaseModel
+from pydantic import BaseModel, AnyUrl
+import typing
 
 class RequestQuality(BaseModel):
-    links = fields.List(fields.Url())
-
-
-request_quality_schema = RequestQuality()
+    links: typing.List[AnyUrl]
