@@ -1,6 +1,8 @@
 from marshmallow import Schema, fields
+from utils.base_model import BaseModel
+
+class RequestQuality(BaseModel):
+    links = fields.List(fields.Url())
 
 
-class RequestQuality(Schema):
-    link = fields.Url()
-    quality = fields.Int()
+request_quality_schema = RequestQuality()
