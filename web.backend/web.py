@@ -6,13 +6,14 @@ from utils.base_model import serialize_middleware
 import routes
 
 if __name__ == '__main__':
+    
     app = web.Application()
 
     routes.register(app)
 
     app.middlewares.append(validation_middleware)
     app.middlewares.append(serialize_middleware)
-
+    
     setup_aiohttp_apispec(
         app=app,
         title="My Documentation",

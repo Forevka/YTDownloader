@@ -1,7 +1,7 @@
 import os
 import typing
 import asyncio
-from aiogram.utils.mixins import ContextInstanceMixin
+from utils.context_mixin import ContextInstanceMixin
 import asyncpg
 from loguru import logger
 import config
