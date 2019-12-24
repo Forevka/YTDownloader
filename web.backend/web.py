@@ -9,15 +9,16 @@ from services.dbservice import DBService
 import config
 
 async def start(app: web.Application) -> None:
-
     app['db']: DBService = DBService(**config.dboptions)
-    app['db'].connect(migrate=True)
-    app['db'].set()
+    await app['db'].connect(migrate=True)
+    DBService.set_current(app['db'])
 
 
 if __name__ == '__main__':
     app = web.Application()
+    
     app.on_startup.append(start)
+    
     routes.register(app)
 
     app.middlewares.append(validation_middleware)
