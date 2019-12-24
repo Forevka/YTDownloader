@@ -5,6 +5,7 @@ class AvailableQuality(BaseModel):
     id: int
     mime_type: str
     resolution: typing.Optional[str]
+    audio_quality: typing.Optional[str]
     fps: str
 
 

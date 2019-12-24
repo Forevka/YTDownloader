@@ -22,6 +22,7 @@ async def get_quality(request: RequestQuality):
                                     id=i.itag, 
                                     mime_type=i.mime_type, 
                                     resolution=i.res, 
+                                    audio_quality=i.audioQuality,
                                     fps=i.fps) for i in video.streams.all()
                                 ]
                             )
