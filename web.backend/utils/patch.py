@@ -33,15 +33,18 @@ def patch():
         if key == 'url_encoded_fmt_stream_map' and not stream_data.get('url_encoded_fmt_stream_map'):
             formats = json.loads(stream_data['player_response'])['streamingData']['formats']
             formats.extend(json.loads(stream_data['player_response'])['streamingData']['adaptiveFormats'])
+            
             try:
                 stream_data[key] = [{u'url': format_item[u'url'],
                                     u'type': format_item[u'mimeType'],
                                     u'quality': format_item[u'quality'],
+                                    u'res': format_item.get('qualityLabel'),
                                     u'itag': format_item[u'itag']} for format_item in formats]
             except:
                 stream_data[key] = [{u'url': urllib.parse.unquote([url_item for url_item in format_item[u'cipher'].split("&") if "url=" in url_item][0].split("=")[1]),
                                     u'sp': urllib.parse.unquote([url_item for url_item in format_item[u'cipher'].split("&") if "sp=" in url_item][0].split("=")[1]),
                                     u's': urllib.parse.unquote([url_item for url_item in format_item[u'cipher'].split("&") if "s=" in url_item][0].split("=")[1]),
+                                    u'res': format_item.get('qualityLabel'),
                                     u'type': format_item[u'mimeType'],
                                     u'quality': format_item[u'quality'],
                                     u'itag': format_item[u'itag']} for format_item in formats]
