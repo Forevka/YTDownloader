@@ -8,8 +8,7 @@ from aiohttp_apispec import (
 
 from models.requests.quality import RequestQuality
 from models.response.quality import ResponseQuality
-
-
+from utils.generic_request import GRequest
 
 @docs(
     tags=["quality"],
@@ -18,8 +17,8 @@ from models.response.quality import ResponseQuality
 )
 @request_schema(RequestQuality)
 @response_schema(ResponseQuality, 200)
-async def get_quality(request: web.Request):
-    model = request.get('object_model')
+async def get_quality(request: GRequest[RequestQuality]):
+    model = request.get_model()
     if model:
         logger.info(model.links)
         links = []
