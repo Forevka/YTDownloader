@@ -5,10 +5,19 @@ from utils.patch import patch; patch()
 from utils.base_model import serialize_middleware
 from utils.generic_request import generic_request_middleware
 import routes
+from services.dbservice import DBService
+import config
+
+async def start(app: web.Application) -> None:
+
+    app['db']: DBService = DBService(**config.dboptions)
+    app['db'].connect(migrate=True)
+    app['db'].set()
+
 
 if __name__ == '__main__':
     app = web.Application()
-
+    app.on_startup.append(start)
     routes.register(app)
 
     app.middlewares.append(validation_middleware)
@@ -22,5 +31,5 @@ if __name__ == '__main__':
         url="/api/docs/swagger.json",
         swagger_path="/api/docs",
     )
-
+    
     web.run_app(app, port=9999)
