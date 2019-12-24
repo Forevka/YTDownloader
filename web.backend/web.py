@@ -6,7 +6,12 @@ from aiohttp import web
 from aiohttp_apispec import (
     docs, querystring_schema, setup_aiohttp_apispec, validation_middleware)
 from loguru import logger
+<<<<<<< Updated upstream
 import youtube_dl
+=======
+from utils.patch import patch; patch()
+from services import DBServices
+>>>>>>> Stashed changes
 import routes
 
 from models.requests.sound import RequestLink
@@ -30,6 +35,7 @@ ydl_opts = {
     'progress_hooks': [downloaded_hook],
 }
 
+<<<<<<< Updated upstream
 
 @docs(
     tags=["link"],
@@ -57,6 +63,10 @@ if __name__ == '__main__':
     app = web.Application()
     routes.create(app)
     app.middlewares.append(validation_middleware)
+=======
+    app.middlewares.append(validation_middleware)
+    db = 
+>>>>>>> Stashed changes
     setup_aiohttp_apispec(
         app=app,
         title="My Documentation",
