@@ -33,8 +33,8 @@ def patch():
         if key == 'url_encoded_fmt_stream_map' and not stream_data.get('url_encoded_fmt_stream_map'):
             formats = json.loads(stream_data['player_response'])['streamingData']['formats']
             formats.extend(json.loads(stream_data['player_response'])['streamingData']['adaptiveFormats'])
-            logger.info(formats)
-            [print(i.get('audioQuality')) for i in formats]
+
+            
             try:
                 stream_data[key] = [{u'url': format_item[u'url'],
                                     u'type': format_item[u'mimeType'],
