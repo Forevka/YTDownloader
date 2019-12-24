@@ -9,5 +9,7 @@ CREATE TABLE IF NOT EXISTS public.videos (
 	"path" text NULL,
 	url text NULL,
 	batch_id uuid NULL,
+	status int2 NULL,
 	CONSTRAINT videos_pk PRIMARY KEY (id)
 );
+
