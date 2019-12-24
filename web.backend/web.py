@@ -10,8 +10,9 @@ import config
 
 async def start(app: web.Application) -> None:
 
-    app['db'] = DBService(**config.dboptions)
-
+    app['db']: DBService = DBService(**config.dboptions)
+    app['db'].connect(migrate=True)
+    app['db'].set()
 
 
 if __name__ == '__main__':
