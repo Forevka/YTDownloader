@@ -1,0 +1,41 @@
+{
+	"info": {
+		"_postman_id": "d1672470-6c86-40e3-8e9a-0911afdb32dc",
+		"name": "YTDownload",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8000/api/v1/quality",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"links\": [\r\n    \"https://www.youtube.com/watch?v=ELTL-PEP_74\"\r\n  ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/v1/quality",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"quality"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
