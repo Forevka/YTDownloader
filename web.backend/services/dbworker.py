@@ -41,20 +41,31 @@ class DBService(ContextInstanceMixin):
                 return
             for filename in os.listdir(path_to_migrations):
                 if filename.endswith(".sql"):
-                    sql_migration = open(
-                        os.path.join(path_to_migrations, filename), "r"
-                    ).read()
-                    try:
-                        res = await self.conn.execute(sql_migration)
-                        logger.debug(
-                            "Apply sql migration " + str(filename) + "res: " + str(res)
-                        )
-                    except Exception as e:
-                        logger.error(e)
+                    if not await self.check_table_exist(filename):
+                        sql_migration = open(
+                            os.path.join(path_to_migrations, filename), "r"
+                        ).read()
+                        try:
+                            res = await self.conn.execute(sql_migration)
+                            logger.debug(
+                                "Apply sql migration " + str(filename) + "res: " + str(res)
+                            )
+                        except Exception as e:
+                            logger.error(e)
 
         logger.info("connected")
+
+    async def add_video(self, url, path):
+        self.conn.execute("INSERT INTO videos")
     
-        
+    async def check_table_exist(self, filename):
+        logger.info(filename)
+        table = await self.conn.fetch("SHOW TABLES FROM '{}' LIKE '{}';".format(config.dboptions["database"], filename))
+        logger.info(table)
+        if table:
+            return True
+        return False
+
 
 
 
