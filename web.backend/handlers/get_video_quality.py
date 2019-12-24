@@ -6,9 +6,10 @@ from loguru import logger
 from app import app
 from models.requests.quality import RequestQuality
 from models.response.quality import ResponseQuality, VideoQuality, AvailableQuality
+from config import API_URL
 
 
-@app.post('/quality', response_model=ResponseQuality)
+@app.post(f'{API_URL}/quality', response_model=ResponseQuality)
 async def get_quality(request: RequestQuality):
     logger.info(request.links)
     resp = ResponseQuality(links=[])

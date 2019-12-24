@@ -8,3 +8,10 @@ dboptions = {
     "database": "zno_bot",
     'migrate': True
 }
+
+
+API_PATH = '/api/'
+
+API_VERSION = 'v1'
+
+API_URL = API_PATH + API_VERSION
