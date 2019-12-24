@@ -1,4 +1,4 @@
-from dbworker import DBService
+from dbservice import DBService
 from config import dboptions
 
 class Controller:
