@@ -12,7 +12,10 @@ from utils.downloader_fabric import DownloaderFabric
 async def main():
     y = await DownloaderFabric("https://www.youtube.com/watch?v=GIXFsy924BI")
     print(y.streams.all())
-    await y.streams.first().download()
+    res = y.find_by_id(18)
+    print(res.filename)
+    res.download()
+    #await y.streams.first().download()
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
