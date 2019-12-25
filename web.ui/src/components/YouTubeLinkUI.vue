@@ -81,7 +81,7 @@ export default class YouTubeLinkUI extends Vue {
   //max-width: 50%;
   margin-left: 25%;
   margin-bottom: 25px;
-  display: inherit;
+  display: block;
   .yt-link-input {
     width: 80%;
   }
