@@ -153,7 +153,7 @@ class Stream(object):
         return video, audio
 
     @property
-    def filesize(self):
+    async def filesize(self):
         """File size of the media stream in bytes.
 
         :rtype: int
@@ -161,7 +161,7 @@ class Stream(object):
             Filesize (in bytes) of the stream.
         """
         if self._filesize is None:
-            headers = request.get(self.url, headers=True)
+            headers = await request.get(self.url, headers=True)
             self._filesize = int(headers['content-length'])
         return self._filesize
 
@@ -199,7 +199,7 @@ class Stream(object):
         filename = safe_filename(self.title)
         return '{filename}.{s.subtype}'.format(filename=filename, s=self)
 
-    def download(self, output_path=None, filename=None, filename_prefix=None):
+    async def download(self, output_path=None, filename=None, filename_prefix=None):
         """Write the media stream to disk.
 
         :param output_path:
@@ -236,14 +236,14 @@ class Stream(object):
 
         # file path
         fp = os.path.join(output_path, filename)
-        bytes_remaining = self.filesize
+        bytes_remaining = await self.filesize
         logger.debug(
             'downloading (%s total bytes) file to %s',
-            self.filesize, fp,
+            await self.filesize, fp,
         )
 
         with open(fp, 'wb') as fh:
-            for chunk in request.get(self.url, streaming=True):
+            async for chunk in request.get_stream(self.url):
                 # reduce the (bytes) remainder by the length of the chunk.
                 bytes_remaining -= len(chunk)
                 # send to the on_progress callback.
@@ -251,19 +251,19 @@ class Stream(object):
         self.on_complete(fh)
         return fp
 
-    def stream_to_buffer(self):
+    async def stream_to_buffer(self):
         """Write the media stream to buffer
 
         :rtype: io.BytesIO buffer
         """
         buffer = io.BytesIO()
-        bytes_remaining = self.filesize
+        bytes_remaining = await self.filesize
         logger.debug(
             'downloading (%s total bytes) file to BytesIO buffer',
-            self.filesize,
+            await self.filesize,
         )
 
-        for chunk in request.get(self.url, streaming=True):
+        for chunk in await request.get(self.url, streaming=True):
             # reduce the (bytes) remainder by the length of the chunk.
             bytes_remaining -= len(chunk)
             # send to the on_progress callback.

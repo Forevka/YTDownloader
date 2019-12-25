@@ -91,10 +91,34 @@ def apply_descrambler(stream_data, key):
     {'foo': [{'bar': '1', 'var': 'test'}, {'em': '5', 't': 'url encoded'}]}
 
     """
-    stream_data[key] = [
-        {k: unquote(v) for k, v in parse_qsl(i)}
-        for i in stream_data[key].split(',')
-    ]
+    
+
+    if key == 'url_encoded_fmt_stream_map' and not stream_data.get('url_encoded_fmt_stream_map'):
+        formats = json.loads(stream_data['player_response'])['streamingData']['formats']
+        formats.extend(json.loads(stream_data['player_response'])['streamingData']['adaptiveFormats'])
+
+        
+        try:
+            stream_data[key] = [{u'url': format_item[u'url'],
+                                u'type': format_item[u'mimeType'],
+                                u'quality': format_item[u'quality'],
+                                u'res': format_item.get('qualityLabel'),
+                                u'audioQuality': format_item.get(u'audioQuality'),
+                                u'itag': format_item[u'itag']} for format_item in formats]
+        except:
+            stream_data[key] = [{u'url': urllib.parse.unquote([url_item for url_item in format_item[u'cipher'].split("&") if "url=" in url_item][0].split("=")[1]),
+                                u'sp': urllib.parse.unquote([url_item for url_item in format_item[u'cipher'].split("&") if "sp=" in url_item][0].split("=")[1]),
+                                u's': urllib.parse.unquote([url_item for url_item in format_item[u'cipher'].split("&") if "s=" in url_item][0].split("=")[1]),
+                                u'res': format_item.get('qualityLabel'),
+                                u'type': format_item[u'mimeType'],
+                                u'quality': format_item[u'quality'],
+                                u'audioQuality': format_item.get(u'audioQuality'),
+                                u'itag': format_item[u'itag']} for format_item in formats]
+    else:
+        stream_data[key] = [
+            {k: unquote(v) for k, v in parse_qsl(i)}
+            for i in stream_data[key].split(',')
+        ]
     logger.debug(
         'applying descrambler\n%s',
         pprint.pformat(stream_data[key], indent=2),

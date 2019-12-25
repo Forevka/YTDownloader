@@ -7,8 +7,8 @@ import logging
 import re
 from collections import OrderedDict
 
-from pytube import request
-from pytube.__main__ import YouTube
+from async_pytube import request
+from async_pytube.__main__ import YouTube
 
 logger = logging.getLogger(__name__)
 
@@ -52,14 +52,14 @@ class Playlist(object):
             load_more_url = ''
         return load_more_url
 
-    def parse_links(self):
+    async def parse_links(self):
         """Parse the video links from the page source, extracts and
         returns the /watch?v= part from video link href
         It's an alternative for BeautifulSoup
         """
 
         url = self.construct_playlist_url()
-        req = request.get(url)
+        req = await request.get(url)
 
         # split the page source by line and process each line
         content = [x for x in req.split('\n') if 'pl-video-title-link' in x]
@@ -70,7 +70,7 @@ class Playlist(object):
         load_more_url = self._load_more_url(req)
         while len(load_more_url):   # there is an url found
             logger.debug('load more url: %s' % load_more_url)
-            req = request.get(load_more_url)
+            req = await request.get(load_more_url)
             load_more = json.loads(req)
             videos = re.findall(
                 r'href=\"(/watch\?v=[\w-]*)',
@@ -174,12 +174,12 @@ class Playlist(object):
                     dl_stream.download(download_path)
                 logger.debug('download complete')
 
-    def title(self):
+    async def title(self):
         """return playlist title (name)
         """
         try:
             url = self.construct_playlist_url()
-            req = request.get(url)
+            req = await request.get(url)
             open_tag = '<title>'
             end_tag = '</title>'
             matchresult = re.compile(open_tag + '(.+?)' + end_tag)

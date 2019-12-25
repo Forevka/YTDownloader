@@ -1,6 +1,5 @@
 import uvicorn
 from app import app
-from utils.patch import patch; patch()
 import handlers.get_video_quality
 
 

@@ -6,7 +6,7 @@ import aiohttp
 
 from async_pytube.compat import urlopen
 # 403 forbidden fix
-
+from loguru import logger
 
 async def get(
     url=None, headers=False,
@@ -29,28 +29,19 @@ async def get(
     response = {}
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as resp:
-            #response = await resp.text()#urlopen(req)
-            if streaming:
-                return await async_response_read(resp, chunk_size)
-            elif headers:
+            if headers:
                 # https://github.com/nficano/pytube/issues/160
-                return {k.lower(): v for k, v in await resp.json().items()}
+                return {k.lower(): v for k, v in resp.headers.items()}
             return (
                 await resp.text()#.decode('utf-8')
             )
 
 
-def stream_response(response, chunk_size=8 * 1024):
-    """Read the response in chunks."""
-    while True:
-        buf = response.read(chunk_size)
-        if not buf:
-            break
-        yield buf
-        
-async def async_response_read(response, chunk_size=8 * 1024):
-    while True:
-        chunk = await resp.content.read(chunk_size)
-        if not chunk:
-            break
-        yield chunk
+async def get_stream(url=None, chunk_size=8 * 1024,):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as resp:
+            while True:
+                chunk = await resp.content.read(chunk_size)
+                if not chunk:
+                    break
+                yield chunk
