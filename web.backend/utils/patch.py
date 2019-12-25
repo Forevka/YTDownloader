@@ -1,10 +1,10 @@
-import pytube.mixins as _mixins
+import async_pytube.mixins as _mixins
 import urllib.parse
 import json
 import pprint
 
-from pytube.compat import parse_qsl
-from pytube.compat import unquote
+from async_pytube.compat import parse_qsl
+from async_pytube.compat import unquote
 from loguru import logger
 
 def patch():
