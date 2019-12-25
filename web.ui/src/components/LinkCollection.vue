@@ -1,8 +1,8 @@
 <template>
   <div class="collection-content">
     <transition-group name="list" tag="ul">
-      <li v-for="i in filtered_cards()" :key="i.id">
-        <YouTubeLinkUI :id="i.id" v-on:delete_card="delete_card"/>
+      <li v-for="i in cards" :key="i.id">
+        <YouTubeLinkUI @delete_card="delete_card(i.id)"/>
       </li>
     </transition-group>
     <b-button type="is-success" @click="add_card()">Add one link</b-button>
@@ -13,37 +13,37 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import YouTubeLinkUI from "./YouTubeLinkUI.vue";
 
+class CardModel {
+  id: number = 0;
+}
+
 @Component({
   components: { YouTubeLinkUI }
 })
 export default class LinkCollection extends Vue {
-  private cards: object[] = [];
+  private cards: CardModel[] = [];
   private ids: number = 0;
   constructor() {
     super();
   }
 
   async mounted(): Promise<void> {
-    this.cards.push({id: this.ids})
+    this.add_card()
   }
 
   add_card(): void {
     this.ids += 1;
-    this.cards.push({id: this.ids})
+    let card = new CardModel()
+    card.id = this.ids
+    this.cards.push(card)
   }
 
   delete_card(card_id: number): void {
-    console.log(card_id)
-    let index = this.cards.indexOf({id: card_id})
-    if (index)
-    {
-      this.cards.splice(index, 1);
-    }
+    this.cards = this.cards.filter(function(value: CardModel, index: number, arr) {
+      return value.id != card_id
+    });
   }
 
-  filtered_cards(): object[] {
-    return this.cards
-  }
 }
 </script>
 

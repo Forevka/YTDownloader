@@ -39,7 +39,7 @@ import { UrlTester } from "@/utilities/url_tester";
 @Component
 export default class YouTubeLinkUI extends Vue {
   @Prop() private msg!: string;
-  @Prop() public id!: number;
+  public id: number = 0;
   private yt_link: string = "";
   private radioButton: string = "Default";
   private file!: IFile;
@@ -55,8 +55,8 @@ export default class YouTubeLinkUI extends Vue {
   }
 
   async mounted(): Promise<void> {
-    this.qualityList = await FilesApi.getAvailableQuality();
-    this.qualityList.forEach(x => console.log(x.id));
+    //this.qualityList = await FilesApi.getAvailableQuality();
+    //this.qualityList.forEach(x => console.log(x.id));
   }
 
   userSumbit(): void {
@@ -70,8 +70,8 @@ export default class YouTubeLinkUI extends Vue {
   }
 
   delete_self(): void {
-    //console.log(this.$parent.$parent.cards.)
     this.$emit('delete_card', this.id)
+    
   }
 }
 </script>
