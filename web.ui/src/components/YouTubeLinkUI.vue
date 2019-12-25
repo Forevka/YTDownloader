@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <section class="main-section">
-      <b-field label="YouTube Downloader">
+  <div class="content">
+    <section class="link-section">
+      <b-field>
         <b-input
           class="yt-link-input"
           v-model="yt_link"
@@ -10,7 +10,7 @@
           @input="ytLinkInput"
         ></b-input>
       </b-field>
-
+      <b-button class="delete-button" type="is-danger" icon-right="delete" @click="delete_self()">Delete</b-button>
       <h1>Select preffer quality</h1>
       <b-field>
         <b-radio-button
@@ -22,9 +22,6 @@
         >
           <span>{{q.name}}</span>
         </b-radio-button>
-      </b-field>
-      <b-field>
-        <b-button type="is-primary" v-on:click="userSumbit">Submit</b-button>
       </b-field>
     </section>
   </div>
@@ -42,6 +39,7 @@ import { UrlTester } from "@/utilities/url_tester";
 @Component
 export default class YouTubeLinkUI extends Vue {
   @Prop() private msg!: string;
+  @Prop() public id!: number;
   private yt_link: string = "";
   private radioButton: string = "Default";
   private file!: IFile;
@@ -49,10 +47,11 @@ export default class YouTubeLinkUI extends Vue {
   private qualityList: IQuality[] = [];
   private yt_link_loading: boolean = false;
 
-  private urlTester: UrlTester = new UrlTester()
+  private urlTester: UrlTester = new UrlTester();
 
   constructor() {
     super();
+    console.log(this.id);
   }
 
   async mounted(): Promise<void> {
@@ -67,16 +66,37 @@ export default class YouTubeLinkUI extends Vue {
 
   ytLinkInput(value: string): void {
     console.log(value);
-    console.log(this.urlTester.isValid(value))
+    console.log(this.urlTester.isValid(value));
+  }
+
+  delete_self(): void {
+    //console.log(this.$parent.$parent.cards.)
+    this.$emit('delete_card', this.id)
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.main-section {
-  max-width: 50%;
+.link-section {
+  //max-width: 50%;
   margin-left: 25%;
+  margin-bottom: 25px;
+  display: inherit;
+  .yt-link-input {
+    width: 80%;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.delete-button {
+  position: relative;
+  top: 0px;
+  left: 20%;
 }
 
 h1 {

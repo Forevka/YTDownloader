@@ -1,17 +1,17 @@
 <template>
   <div class="home">
-    <YouTubeLinkUI msg="Welcome to Your Vue.js App"/>
+    <LinkCollection/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import YouTubeLinkUI from '@/components/YouTubeLinkUI.vue'
+import LinkCollection from '@/components/LinkCollection.vue'
 
 export default {
   name: 'home',
   components: {
-    YouTubeLinkUI
+    LinkCollection
   }
 }
 </script>
