@@ -51,22 +51,21 @@ export default class YouTubeLinkUI extends Vue {
 
   constructor() {
     super();
-    console.log(this.id);
   }
 
   async mounted(): Promise<void> {
-    //this.qualityList = await FilesApi.getAvailableQuality();
+    this.qualityList = await FilesApi.getAvailableQuality();
     //this.qualityList.forEach(x => console.log(x.id));
   }
 
   userSumbit(): void {
-    console.log(this.yt_link);
+    //console.log(this.yt_link);
     this.yt_link_loading = true;
   }
 
   ytLinkInput(value: string): void {
-    console.log(value);
-    console.log(this.urlTester.isValid(value));
+    //console.log(value);
+    //console.log(this.urlTester.isValid(value));
   }
 
   delete_self(): void {
