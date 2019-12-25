@@ -263,7 +263,7 @@ class Stream(object):
             await self.filesize,
         )
 
-        for chunk in await request.get(self.url, streaming=True):
+        async for chunk in request.get_stream(self.url):
             # reduce the (bytes) remainder by the length of the chunk.
             bytes_remaining -= len(chunk)
             # send to the on_progress callback.
