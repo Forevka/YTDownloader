@@ -14,8 +14,9 @@ async def main():
     print(y.streams.all())
     res = y.find_by_id(18)
     print(res.filename)
-    res.download()
-    #await y.streams.first().download()
+    #await res.download()
+    a = await res.to_buffer()
+    print(a)
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()

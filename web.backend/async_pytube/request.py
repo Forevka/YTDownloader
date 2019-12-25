@@ -33,7 +33,7 @@ async def get(
                 # https://github.com/nficano/pytube/issues/160
                 return {k.lower(): v for k, v in resp.headers.items()}
             return (
-                await resp.text()#.decode('utf-8')
+                (await resp.read()).decode('utf-8')
             )
 
 
