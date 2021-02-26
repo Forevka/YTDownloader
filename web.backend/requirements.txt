@@ -1,4 +1,4 @@
-aiohttp==3.6.2
+aiohttp==3.7.4
 asyncpg==0.20.0
 contextvars==2.4
 fastapi==0.45.0
